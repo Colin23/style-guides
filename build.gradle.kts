@@ -1,7 +1,8 @@
 import de.thetaphi.forbiddenapis.gradle.CheckForbiddenApis
 
 plugins {
-    `java-library` // Apply the java-library plugin for API and implementation separation.
+    java // Use this for developing standalone Java applications
+    `java-library` // Use this for developing libraries and APIs
     id("io.freefair.lombok") version "8.3"
     id("de.thetaphi.forbiddenapis") version "3.6"
     checkstyle
@@ -9,7 +10,9 @@ plugins {
 }
 
 group = "com.colinmoerbe"
-version = "0.0.1-SNAPSHOT" // Needed for naming the JAR file.
+// Needed for naming the JAR file. Use 'SNAPSHOT' during implementation, once the feature is done, delete it.
+// For deleting 'SNAPSHOT' make a new commit it tag it with the release version
+version = "0.0.1-SNAPSHOT"
 
 // Apply a specific Java toolchain to ease working on different environments. Always chose the latest LTS version.
 java {
