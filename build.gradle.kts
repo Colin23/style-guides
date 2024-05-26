@@ -16,7 +16,11 @@ plugins {
 group = "com.colinmoerbe"
 // Needed for naming the JAR file. Use 'SNAPSHOT' during implementation, once the feature is done, delete it.
 // For deleting 'SNAPSHOT' make a new commit it tag it with the release version
-version = "0.0.1-SNAPSHOT"
+version = "0.0.1-SNAPSHOT" // Get this from the custom versioning methods
+
+springBoot { // Used for details about the project when used with Spring Boot actuator
+    buildInfo()
+}
 
 // Apply a specific Java toolchain to ease working on different environments. Always chose the latest LTS version.
 java {
