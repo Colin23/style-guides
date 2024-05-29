@@ -61,7 +61,6 @@ dependencies {
     testImplementation("org.junit.jupiter:junit-jupiter") // Use JUnit Jupiter for testing.
 }
 
-// Only needed for listeners
 tasks.withType<Jar> {
     manifest {
         attributes["Implementation-Version"] = version
@@ -72,10 +71,21 @@ tasks.withType<Test> {
     useJUnitPlatform()
 }
 
+// Checkstyle tests for the main directory
+tasks.named<DefaultTask>("checkstyleMain").configure {
+    isEnabled = true
+}
+
+// Checkstyle tests for the test directory
+tasks.named<DefaultTask>("checkstyleTest").configure {
+    isEnabled = false
+}
+
 // Generic imported ForbiddenApis and custom self-written ones.
 tasks.named<CheckForbiddenApis>("forbiddenApisMain").configure {
     bundledSignatures = setOf("jdk-unsafe", "jdk-deprecated", "jdk-internal", "jdk-non-portable", "jdk-system-out", "jdk-reflection")
     signaturesFiles = project.files("forbidden-apis.txt")
+    isEnabled = true
     setExcludes(setOf("**/api/**/*.class")) // This has to reference the .class files in the build dir.
 }
 
@@ -84,11 +94,6 @@ tasks.named<CheckForbiddenApis>("forbiddenApisTest").configure {
     bundledSignatures = setOf("jdk-unsafe", "jdk-deprecated", "jdk-internal", "jdk-non-portable", "jdk-reflection")
     signaturesFiles = project.files("forbidden-apis.txt")
     isEnabled = true
-}
-
-// Checkstyle tests for the test directory
-tasks.named<DefaultTask>("checkstyleTest").configure {
-    isEnabled = false
 }
 
 tasks.named("check").configure {
