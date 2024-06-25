@@ -13,12 +13,12 @@ plugins {
     id("de.thetaphi.forbiddenapis") version "3.7"
 }
 
-group = "com.colinmoerbe"
+group = "com.colin-moerbe"
 // Needed for naming the JAR file. Use 'SNAPSHOT' during implementation, once the feature is done, delete it.
 // For deleting 'SNAPSHOT' make a new commit it tag it with the release version
 version = "0.0.1-SNAPSHOT" // Get this from the custom versioning methods
 
-springBoot { // Used for details about the project when used with Spring Boot actuator
+springBoot { // Exposed additional information about the application to the /info actuator endpoint.
     buildInfo()
 }
 
