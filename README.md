@@ -26,3 +26,6 @@ Before setting up your Gradle project, you should read the following sections ca
 > [!CAUTION]
 > The used versions in the different modules are not up to date and might need to be changed. 
 > Otherwise you could risk security issues in the various dependencies and/or problems with your Gradle setup.
+
+## Contributing
+See [contributing](https://github.com/Colin23/.github/blob/main/CONTRIBUTING.md)
