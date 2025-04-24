@@ -1,4 +1,4 @@
-package ROOT LEVEL OF STANDARD TEST DIR
+package com.colinmoerbe;
 
 import com.tngtech.archunit.core.domain.JavaClasses;
 import com.tngtech.archunit.core.importer.ClassFileImporter;

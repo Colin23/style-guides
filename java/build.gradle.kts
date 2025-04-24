@@ -2,7 +2,7 @@ import de.thetaphi.forbiddenapis.gradle.CheckForbiddenApis
 
 plugins {
     java // Use this for developing standalone Java applications
-    `java-library` // Use this for developing libraries and APIs
+    // `java-library` Use this for developing libraries and APIs
     idea
     checkstyle
     // Use this for adding Spring Boot specific gradle tasks and/or centralizing versioning.
@@ -13,7 +13,7 @@ plugins {
     id("de.thetaphi.forbiddenapis") version "3.7"
 }
 
-group = "com.colin-moerbe"
+group = "com.colinmoerbe"
 // Needed for naming the JAR file. Use 'SNAPSHOT' during implementation, once the feature is done, delete it.
 // For deleting 'SNAPSHOT' make a new commit it tag it with the release version
 version = "0.0.1-SNAPSHOT" // Get this from the custom versioning methods
@@ -22,10 +22,13 @@ springBoot { // Exposed additional information about the application to the /inf
     buildInfo()
 }
 
-// Apply a specific Java toolchain to ease working on different environments. Always chose the latest LTS version.
 java {
+    sourceCompatibility = JavaVersion.VERSION_21 // Gradle should use Java 21 features and Syntax when compiling
     toolchain {
+        // Gradle checks for a local Java 21 version and uses it if one is found.
+        // If there's no local version, the build crashes. The foojay-resolver-convention plugin is needed then.
         languageVersion.set(JavaLanguageVersion.of(21))
+        vendor = JvmVendorSpec.ADOPTIUM // Gradle uses Eclipse Temurin (AdoptOpenJDK HotSpot)
     }
 }
 
@@ -47,18 +50,18 @@ val slf4jVersion = "2.0.13"
 val jakartaVersion = "3.0.0"
 
 dependencies {
-    implementation("org.springframework:spring-context")                // The dependency for Spring
-    implementation("com.google.guava:guava")                            // The dependency for ImmutableLists
-    implementation("org.slf4j:slf4j-api:$slf4jVersion")                 // The dependency for logging
-    implementation("jakarta.annotation:jakarta.annotation-api:$jakartaVersion")   // The dependency for Jakarta EE annotations (@PostConstruct)
+    implementation("org.springframework:spring-context")
+    implementation("com.google.guava:guava")
+    implementation("org.slf4j:slf4j-api:$slf4jVersion")
+    implementation("jakarta.annotation:jakarta.annotation-api:$jakartaVersion")
 
-    testRuntimeOnly("org.junit.platform:junit-platform-launcher") // Use JUnit Jupiter for testing.
+    testRuntimeOnly("org.junit.platform:junit-platform-launcher")
 
     // ArchitectureTests dependencies.
     testImplementation("com.tngtech.archunit:archunit:$archunitVersion"){
         exclude(group = "org.slf4j") // Not necessarily needed. If It's deleted, the slf4j dependency can also be deleted
     }
-    testImplementation("org.junit.jupiter:junit-jupiter") // Use JUnit Jupiter for testing.
+    testImplementation("org.junit.jupiter:junit-jupiter")
 }
 
 tasks.withType<Jar> {
@@ -71,17 +74,14 @@ tasks.withType<Test> {
     useJUnitPlatform()
 }
 
-// Checkstyle tests for the main directory
 tasks.named<DefaultTask>("checkstyleMain").configure {
     isEnabled = true
 }
 
-// Checkstyle tests for the test directory
 tasks.named<DefaultTask>("checkstyleTest").configure {
     isEnabled = false
 }
 
-// Generic imported ForbiddenApis and custom self-written ones.
 tasks.named<CheckForbiddenApis>("forbiddenApisMain").configure {
     bundledSignatures = setOf("jdk-unsafe", "jdk-deprecated", "jdk-internal", "jdk-non-portable", "jdk-system-out", "jdk-reflection")
     signaturesFiles = project.files("forbidden-apis.txt")
@@ -89,7 +89,6 @@ tasks.named<CheckForbiddenApis>("forbiddenApisMain").configure {
     setExcludes(setOf("**/api/**/*.class")) // This has to reference the .class files in the build dir.
 }
 
-// Forbidden API tests for the 'test' directory
 tasks.named<CheckForbiddenApis>("forbiddenApisTest").configure {
     bundledSignatures = setOf("jdk-unsafe", "jdk-deprecated", "jdk-internal", "jdk-non-portable", "jdk-reflection")
     signaturesFiles = project.files("forbidden-apis.txt")
@@ -100,11 +99,11 @@ tasks.named("check").configure {
     dependsOn(tasks.named("forbiddenApisMain"))
 }
 
-sourceSets["main"].java.srcDirs("src/main/gen") // Mark generated directories as source directories.
+// sourceSets["main"].java.srcDirs("src/main/gen") Mark generated directories as source directories.
 
 idea {
     module {
-        generatedSourceDirs.add(project.file("src/main/gen")) // Only needed when an additional source directory is needed.
+        // generatedSourceDirs.add(project.file("src/main/gen")) Only needed when an additional source directory is needed.
         isDownloadJavadoc = true
         isDownloadSources = true
     }
@@ -112,5 +111,5 @@ idea {
 
 checkstyle {
     configFile = project.file("checkstyle.xml")
-    toolVersion = "10.12.4"
+    toolVersion = "10.23.0"
 }

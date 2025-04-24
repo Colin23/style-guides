@@ -1,4 +1,4 @@
-// THIS DOESN'T WORK OUT OF THE BOX. I CURRENTLY HAVE THIS IN THE build.gradle.kts file
+// THIS DOESN'T WORK OUT OF THE BOX.
 
 class ApplicationVersion(
     private val major: Int,

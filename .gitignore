@@ -1,38 +1,8 @@
-.gradle
-build/
-!gradle/wrapper/gradle-wrapper.jar
-!**/src/main/**/build/
-!**/src/test/**/build/
-
-### STS ###
-.apt_generated
-.classpath
-.factorypath
-.project
-.settings
-.springBeans
-.sts4-cache
-bin/
-!**/src/main/**/bin/
-!**/src/test/**/bin/
-
-### IntelliJ IDEA ###
+### IDE ###
 .idea
-*.iws
-*.iml
-*.ipr
-out/
-!**/src/main/**/out/
-!**/src/test/**/out/
 
-### VS Code ###
-.vscode/
+### Java ###
+.gradle
 
-### Ignore Secrets ###
-application.properties
-.env
-
-### Ignore Gradle files which should not be pushed for this specific repository ###
-gradle/
-gradlew
-gradlew.bat
+# Ignore Gradle build output directory
+build
