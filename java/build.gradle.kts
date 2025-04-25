@@ -7,10 +7,10 @@ plugins {
     checkstyle
     // Use this for adding Spring Boot specific gradle tasks and/or centralizing versioning.
     // This also comes with the spring boot BOM, meaning if only Spring Boot dependencies are used, there's no need for adding the dependency-management plugin.
-    id("org.springframework.boot") version "3.3.0"
-    id("io.spring.dependency-management") version "1.1.5" // Adds possibility for BOM managed dependency versions
-    id("io.freefair.lombok") version "8.6"
-    id("de.thetaphi.forbiddenapis") version "3.7"
+    id("org.springframework.boot") version "3.4.5"
+    id("io.spring.dependency-management") version "1.1.7" // Adds possibility for BOM managed dependency versions
+    id("io.freefair.lombok") version "8.13.1"
+    id("de.thetaphi.forbiddenapis") version "3.9"
 }
 
 group = "com.colinmoerbe"
@@ -23,11 +23,11 @@ springBoot { // Exposed additional information about the application to the /inf
 }
 
 java {
-    sourceCompatibility = JavaVersion.VERSION_21 // Gradle should use Java 21 features and Syntax when compiling
+    sourceCompatibility = JavaVersion.VERSION_23 // Gradle should use Java 23 features and Syntax when compiling
     toolchain {
-        // Gradle checks for a local Java 21 version and uses it if one is found.
+        // Gradle checks for a local Java 23 version and uses it if one is found.
         // If there's no local version, the build crashes. The foojay-resolver-convention plugin is needed then.
-        languageVersion.set(JavaLanguageVersion.of(21))
+        languageVersion.set(JavaLanguageVersion.of(23))
         vendor = JvmVendorSpec.ADOPTIUM // Gradle uses Eclipse Temurin (AdoptOpenJDK HotSpot)
     }
 }
@@ -38,16 +38,14 @@ repositories {
 
 dependencyManagement {
     imports {
-        mavenBom ("org.springframework.boot:spring-boot-dependencies:3.3.0")
-        mavenBom ("org.springframework:spring-framework-bom:6.1.8")
-        mavenBom ("org.junit:junit-bom:5.10.2")
-        mavenBom ("com.google.guava:guava-bom:33.2.0-jre")
+        mavenBom ("org.junit:junit-bom:5.12.2")
+        mavenBom ("com.google.guava:guava-bom:33.4.8-jre")
     }
 }
 
-val archunitVersion = "1.3.0"
-val slf4jVersion = "2.0.13"
+val slf4jVersion = "2.0.17"
 val jakartaVersion = "3.0.0"
+val archunitVersion = "1.4.0"
 
 dependencies {
     implementation("org.springframework:spring-context")
@@ -58,9 +56,7 @@ dependencies {
     testRuntimeOnly("org.junit.platform:junit-platform-launcher")
 
     // ArchitectureTests dependencies.
-    testImplementation("com.tngtech.archunit:archunit:$archunitVersion"){
-        exclude(group = "org.slf4j") // Not necessarily needed. If It's deleted, the slf4j dependency can also be deleted
-    }
+    testImplementation("com.tngtech.archunit:archunit:$archunitVersion")
     testImplementation("org.junit.jupiter:junit-jupiter")
 }
 

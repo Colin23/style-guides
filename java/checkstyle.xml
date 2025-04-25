@@ -59,11 +59,11 @@
         <module name="RequireEmptyLineBeforeBlockTagGroup"/> <!-- See https://checkstyle.org/checks/javadoc/requireemptylinebeforeblocktaggroup.html -->
 
         <module name="MethodCount"> <!-- See https://checkstyle.org/checks/sizes/methodcount.html -->
-            <property name="maxTotal" value="20"/>
+            <property name="maxTotal" value="30"/>
         </module>
         <module name="MethodLength"> <!-- See https://checkstyle.org/checks/sizes/methodlength.html -->
             <property name="countEmpty" value="false"/>
-            <property name="max" value="50"/>
+            <property name="max" value="30"/>
         </module>
         <module name="AnonInnerLength"> <!-- See https://checkstyle.org/checks/sizes/anoninnerlength.html -->
             <property name="max" value="15"/>
