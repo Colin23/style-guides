@@ -38,8 +38,8 @@ repositories {
 
 dependencyManagement {
     imports {
-        mavenBom ("org.junit:junit-bom:5.12.2")
-        mavenBom ("com.google.guava:guava-bom:33.4.8-jre")
+        mavenBom("org.junit:junit-bom:5.12.2")
+        mavenBom("com.google.guava:guava-bom:33.4.8-jre")
     }
 }
 
@@ -79,15 +79,16 @@ tasks.named<DefaultTask>("checkstyleTest").configure {
 }
 
 tasks.named<CheckForbiddenApis>("forbiddenApisMain").configure {
-    bundledSignatures = setOf("jdk-unsafe", "jdk-deprecated", "jdk-internal", "jdk-non-portable", "jdk-system-out", "jdk-reflection")
-    signaturesFiles = project.files("forbidden-apis.txt")
+    bundledSignatures =
+        setOf("jdk-unsafe", "jdk-deprecated", "jdk-internal", "jdk-non-portable", "jdk-system-out", "jdk-reflection")
+    signaturesFiles = project.files("config/forbidden-apis.txt")
     isEnabled = true
     setExcludes(setOf("**/api/**/*.class")) // This has to reference the .class files in the build dir.
 }
 
 tasks.named<CheckForbiddenApis>("forbiddenApisTest").configure {
     bundledSignatures = setOf("jdk-unsafe", "jdk-deprecated", "jdk-internal", "jdk-non-portable", "jdk-reflection")
-    signaturesFiles = project.files("forbidden-apis.txt")
+    signaturesFiles = project.files("config/forbidden-apis.txt")
     isEnabled = true
 }
 
@@ -106,6 +107,6 @@ idea {
 }
 
 checkstyle {
-    configFile = project.file("checkstyle.xml")
+    configFile = project.file("config/checkstyle.xml")
     toolVersion = "10.23.0"
 }
